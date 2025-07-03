@@ -1,3 +1,4 @@
+#ifdef IMGUI
 namespace ImGui
 {
 	// Helps with boilerplate code for ImGui::Text setting a color based on a bool value. If TrueString is empty, it will color the label instead
@@ -34,3 +35,4 @@ namespace ImGui
 		return Value;
 	}
 }
+#endif
