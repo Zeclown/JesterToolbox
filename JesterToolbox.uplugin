@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "JesterToolbox",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "Pierre-Olivier Chartrand",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "JesterToolbox",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
