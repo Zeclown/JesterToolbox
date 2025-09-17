@@ -16,6 +16,12 @@
  * CapabilitySystem.GetPreventedCapabilities().AddTag(JumpTag, "Stunned");
  * ```
  */
+/** Tracks dynamically added capability nodes for a given source object */
+struct FCapabilitySourceEntry
+{
+    TArray<UCapabilityNode_AS> Nodes;
+}
+
 class UCapabilitySystemComponent_AS : UActorComponent
 {
 	/** 
@@ -52,6 +58,12 @@ class UCapabilitySystemComponent_AS : UActorComponent
 	 */
 	UPROPERTY(VisibleInstanceOnly)
 	private FGameplayTagAggregator PreventedCapabilities;
+
+	/**
+	 * Tracks capability nodes added dynamically per source object (e.g., equipment)
+	 */
+	UPROPERTY(VisibleInstanceOnly)
+	private TMap<UObject, FCapabilitySourceEntry> SourceToNodes;
 
 	/**
 	 * Gets the prevented capabilities aggregator for external modification
@@ -154,6 +166,63 @@ class UCapabilitySystemComponent_AS : UActorComponent
 				Capability.TickActive(DeltaSeconds);
 			}
 		}
+	}
+
+	/**
+	 * Dynamically adds a capability to the root and tracks it under a source object.
+	 * @return The created capability node, or null.
+	 */
+	UFUNCTION()
+	UCapabilityNode_AS AddCapabilityByClass(TSubclassOf<UCapability_AS> CapabilityClass, UObject Source)
+	{
+		if (CapabilityClass == nullptr || RootCapabilityNode == nullptr)
+		{
+			return nullptr;
+		}
+
+		UCapability_AS Capability = NewObject(this, CapabilityClass);
+		if (Capability == nullptr)
+		{
+			return nullptr;
+		}
+
+		UCapabilityNode_AS Node = Capability.GenerateCompoundNode();
+		RootCapabilityNode.Do(Node);
+		SourceToNodes.FindOrAdd(Source).Nodes.Add(Node);
+		return Node;
+	}
+
+	/**
+	 * Adds multiple capabilities from an array of classes, tracking under a single source.
+	 */
+	UFUNCTION()
+	void AddCapabilitiesByClassArray(const TArray<TSubclassOf<UCapability_AS>>& InCapabilities, UObject Source)
+	{
+		for (TSubclassOf<UCapability_AS> EachClass : InCapabilities)
+		{
+			AddCapabilityByClass(EachClass, Source);
+		}
+	}
+
+	/**
+	 * Removes all capabilities previously added by a given source object.
+	 */
+	UFUNCTION()
+	void RemoveCapabilitiesBySource(UObject Source)
+	{
+		if (SourceToNodes.Contains(Source) == false)
+		{
+			return;
+		}
+		FCapabilitySourceEntry Entry = SourceToNodes[Source];
+		for (UCapabilityNode_AS Node : Entry.Nodes)
+		{
+			if (Node != nullptr)
+			{
+				RootCapabilityNode.RemoveNode(Node);
+			}
+		}
+		SourceToNodes.Remove(Source);
 	}
 
 	bool IsCapabilityEnabled(TSubclassOf<UCapability_AS> CapabilityClass)

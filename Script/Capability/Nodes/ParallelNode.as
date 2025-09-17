@@ -44,6 +44,37 @@ class UParallelSequence_AS : UCapabilityNode_AS
     }
 
     /**
+     * Removes a previously added child node.
+     * If the node is currently enabled, it is first aborted.
+     */
+    void RemoveNode(UCapabilityNode_AS Node)
+    {
+        for (int i = 0; i < ChildNodes.Num(); i++)
+        {
+            if (ChildNodes[i] == Node)
+            {
+                if (ChildNodes[i].IsEnabled())
+                {
+                    ChildNodes[i].AbortFromParent();
+                }
+                ChildNodes.RemoveAt(i);
+                break;
+            }
+        }
+
+        // Re-evaluate cached enabled state
+        bAnyNodeWasEnabled = false;
+        for (UCapabilityNode_AS ChildNode : ChildNodes)
+        {
+            if (ChildNode.IsEnabled())
+            {
+                bAnyNodeWasEnabled = true;
+                break;
+            }
+        }
+    }
+
+    /**
      * Convenience method to add a capability class as a child node
      * @param CapabilityClass The capability class to add
      * @return This node for method chaining

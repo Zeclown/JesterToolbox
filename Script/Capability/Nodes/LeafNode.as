@@ -70,7 +70,7 @@ class ULeafNode_AS : UCapabilityNode_AS
         }
         return Result;
     }
-    
+
 #ifdef IMGUI
     void ShowImGui() override
     {
@@ -94,4 +94,13 @@ class ULeafNode_AS : UCapabilityNode_AS
         }
     }
 #endif
+
+    void AbortFromParent() override
+    {
+        Super::AbortFromParent();
+        if (Capability != nullptr && Capability.bIsEnabled)
+        {
+            Capability.DisableCapability();
+        }
+    }
 }
