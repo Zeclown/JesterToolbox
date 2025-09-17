@@ -8,8 +8,10 @@
 #include "GameplayTagContainer.h"
 #include "GameplayTagsManager.h"
 #include "Animation/AnimMetaData.h"
+#include "Core/GameStateInitialization.h"
 #include "Engine/SCS_Node.h"
 #include "Engine/SimpleConstructionScript.h"
+#include "GameFramework/GameStateBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #if PLATFORM_WINDOWS
@@ -481,4 +483,39 @@ void UJesterFunctionLibrary::DrawDebugCameraFromValues(const UObject* WorldConte
 FVector UJesterFunctionLibrary::MirrorVectorByNormal(FVector InVect, FVector InNormal)
 {
 	return UKismetMathLibrary::MirrorVectorByNormal(InVect, InNormal);
+}
+
+bool UJesterFunctionLibrary::CallFunctionByName(UObject* ObjPtr, FName FunctionName)
+{
+	if (ObjPtr)
+	{
+		if (UFunction* Function = ObjPtr->FindFunction(FunctionName))
+		{
+			ObjPtr->ProcessEvent(Function, nullptr);
+			return true;
+		}
+		return false;
+	}
+	return false;
+}
+
+UGameStateInitialization* UJesterFunctionLibrary::GetGameStateInitializationComponent(UObject* WorldContextObject)
+{
+	AGameStateBase* GameState = UGameplayStatics::GetGameState(WorldContextObject);
+	if(GameState == nullptr)
+	{
+		return nullptr;
+	}
+	return GameState->FindComponentByClass<UGameStateInitialization>();
+}
+
+void UJesterFunctionLibrary::BindToGameStateInitializationStep(UObject* WorldContextObject, FGameplayTag State, UObject* Object, FName FunctionName, bool bIsPostState)
+{
+	UGameStateInitialization* InitComp = GetGameStateInitializationComponent(WorldContextObject);
+	if(InitComp == nullptr)
+	{
+		FAngelscriptManager::Throw("GameStateInitialization component not found on GameState");
+		return;
+	}
+	InitComp->BindToInitializationStep(State, Object, FunctionName, bIsPostState);
 }
