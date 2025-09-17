@@ -11,7 +11,10 @@ void UAssetsLocatorService::Initialize()
 	{
 		return;
 	}
-
+	
+	Assets.Empty();
+	Classes.Empty();
+	
 	// Flatten the arrays
 	for (const auto& Category : RegisteredAssets)
 	{

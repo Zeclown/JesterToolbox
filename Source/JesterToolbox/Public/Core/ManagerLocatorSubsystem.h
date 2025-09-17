@@ -15,19 +15,19 @@ class JESTERTOOLBOX_API UManagerLocatorSubsystem : public UEngineSubsystem
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintCallable, Category = "Vice|ManagerLocator")
+	UFUNCTION(BlueprintCallable, Category = "Jester|ManagerLocator")
 	void RegisterActorManager(AActor* Manager);
 
-	UFUNCTION(BlueprintCallable, Category = "Vice|ManagerLocator")
+	UFUNCTION(BlueprintCallable, Category = "Jester|ManagerLocator")
 	void RegisterComponentManager(UActorComponent* Manager);
 
-	UFUNCTION(BlueprintCallable, Category = "Vice|ManagerLocator")
+	UFUNCTION(BlueprintCallable, Category = "Jester|ManagerLocator")
 	void UnregisterActorManager(AActor* Manager);
 
-	UFUNCTION(BlueprintCallable, Category = "Vice|ManagerLocator")
+	UFUNCTION(BlueprintCallable, Category = "Jester|ManagerLocator")
 	void UnregisterComponentManager(UActorComponent* Manager);
 	
-	UFUNCTION(BlueprintPure, Category = "Vice|ManagerLocator", meta=(DeterminesOutputType = "ManagerClass"))
+	UFUNCTION(BlueprintPure, Category = "Jester|ManagerLocator", meta=(DeterminesOutputType = "ManagerClass"))
 	UObject* GetManager(TSubclassOf<UObject> ManagerClass);
 
 private:

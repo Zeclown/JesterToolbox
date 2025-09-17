@@ -114,4 +114,13 @@ public:
 
 	UFUNCTION(ScriptCallable, Category="Math")
 	static FVector MirrorVectorByNormal(FVector InVect, FVector InNormal);
+	
+	UFUNCTION(BlueprintCallable, Category = "Helpers")
+	static bool CallFunctionByName(UObject* ObjPtr, FName FunctionName);
+	
+	UFUNCTION(BlueprintPure, meta=(WorldContext="WorldContextObject"))
+	static UGameStateInitialization* GetGameStateInitializationComponent(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "Helpers", meta=(WorldContext="WorldContextObject",DelegateFunctionParam = "FunctionName", DelegateObjectParam = "Object", DelegateBindType = "FGameStateInitizationEvent" ))
+	static void BindToGameStateInitializationStep(UObject* WorldContextObject, FGameplayTag State, UObject* Object, FName FunctionName, bool bIsPostState = false);
 };
