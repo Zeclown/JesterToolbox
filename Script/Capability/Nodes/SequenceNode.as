@@ -131,7 +131,7 @@ class UCompoundSequence_AS : UCapabilityNode_AS
         Super::ShowImGui();
         
         FImGuiScopedID ScopedID;
-        FColor Color = IsEnabled() ? JesterColors::Dracula::Green : JesterColors::Dracula::Red;
+        FColor Color = IsEnabled() ? JesterColors::Green : JesterColors::Red;
         ImGui::PushStyleColor(EImGuiCol::Text, Color);
         ImGui::Text("-- Sequence");
         ImGui::PopStyleColor();

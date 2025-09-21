@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "ManagerLocatorSubsystem.h"
 #include "JesterFunctionLibrary.generated.h"
 
 /**

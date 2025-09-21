@@ -76,10 +76,10 @@ class ULeafNode_AS : UCapabilityNode_AS
     {
         Super::ShowImGui();
 
-        FColor Color = JesterColors::Dracula::Red;
+        FColor Color = JesterColors::Red;
         if(IsEnabled())
         {
-            Color = JesterColors::Dracula::Green;
+            Color = JesterColors::Green;
         }
         ImGui::PushStyleColor(EImGuiCol::Text, Color);
         if(ImGui::TreeNode(CapabilityClass.Get().GetName().ToString()))

@@ -9,11 +9,11 @@ namespace ImGui
 			// If its empty, it means the label needs to be colored
 			if (Value)
 			{
-				ImGui::PushStyleColor(EImGuiCol::Text, JesterColors::Dracula::Green);
+				ImGui::PushStyleColor(EImGuiCol::Text, JesterColors::Green);
 			}
 			else
 			{
-				ImGui::PushStyleColor(EImGuiCol::Text, JesterColors::Dracula::Red);
+				ImGui::PushStyleColor(EImGuiCol::Text, JesterColors::Red);
 			}
 			ImGui::Text(f"{Label}");
 			ImGui::PopStyleColor();
@@ -23,11 +23,11 @@ namespace ImGui
 		ImGui::Text(f"{Label}: ");
 		if (Value)
 		{
-			ImGui::PushStyleColor(EImGuiCol::Text, JesterColors::Dracula::Green);
+			ImGui::PushStyleColor(EImGuiCol::Text, JesterColors::Green);
 		}
 		else
 		{
-			ImGui::PushStyleColor(EImGuiCol::Text, JesterColors::Dracula::Red);
+			ImGui::PushStyleColor(EImGuiCol::Text, JesterColors::Red);
 		}
 		ImGui::SameLine();
 		ImGui::Text(f"{Value ? TrueString : FalseString}");

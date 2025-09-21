@@ -245,7 +245,8 @@ class UJesterActorPickerWindow : UImGuiWindow
 		CachedComponents.Empty();
 
 		// Cache all components and sort them (debuggable first)
-		TSet<UActorComponent> AllComponents = Actor.GetComponents();
+		TSet<UActorComponent> AllComponents;
+		Actor.GetComponentsByClass(AllComponents);
 		TArray<UActorComponent> DebuggableComponents;
 		TArray<UActorComponent> NonDebuggableComponents;
 
