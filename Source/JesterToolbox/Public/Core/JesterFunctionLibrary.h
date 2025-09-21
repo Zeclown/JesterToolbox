@@ -117,6 +117,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Helpers")
 	static bool CallFunctionByName(UObject* ObjPtr, FName FunctionName);
+
+	UFUNCTION(BlueprintCallable, Category = "Helpers")
+	static bool HasFunctionWithName(UObject* ObjPtr, FName FunctionName);
 	
 	UFUNCTION(BlueprintPure, meta=(WorldContext="WorldContextObject"))
 	static UGameStateInitialization* GetGameStateInitializationComponent(UObject* WorldContextObject);

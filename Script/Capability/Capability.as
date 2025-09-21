@@ -233,6 +233,33 @@ class UCapability_AS : UObject
 	 */
 	void ShowImGui()
 	{
+		ImGui::Text(f"Class: {GetClass().GetName()}");
+		ImGui::Text(f"Enabled: {bIsEnabled}");
+		if (bIsEnabled)
+		{
+			ImGui::Text(f"Time Enabled: {GetTimeEnabled():.2f}s");
+		}
+
+		if (CapabilityTags.Num() > 0)
+		{
+			ImGui::Text("Tags:");
+			ImGui::Indent();
+			for (FGameplayTag Tag : CapabilityTags.GameplayTags)
+			{
+				ImGui::Text(f"  - {Tag.ToString()}");
+			}
+			ImGui::Unindent();
+		}
+		ImGui::BeginGroupPanel("Capability Specific", FVector2D(0, 0));
+		ShowCapabilitySpecificDebug();
+		ImGui::EndGroupPanel();
+	}
+
+	/**
+	 * Override this in derived classes to show capability-specific debug information
+	 */
+	void ShowCapabilitySpecificDebug()
+	{
 	}
 #endif
 }

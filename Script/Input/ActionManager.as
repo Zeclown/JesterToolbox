@@ -282,7 +282,8 @@ class UActionManager_AS : UActorComponent
 
 		for (auto& EachAction : RegisteredActions)
 		{
-			ImGui::Text(f"Action: {EachAction.Value.Action.GetName()}");
+			FString ActionName = EachAction.Value.Action != nullptr ? EachAction.Value.Action.GetName().ToString() : "None";
+			ImGui::Text(f"Action: {ActionName}");
 			ImGui::Text(f"Tag: {EachAction.Value.ActionTag.ToString()}");
 
 			FRegisteredInputActionRuntimeData& RuntimeData = RegisteredActionsRuntimeData[EachAction.Value.ActionTag];

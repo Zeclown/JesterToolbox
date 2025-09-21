@@ -26,7 +26,7 @@ public class JesterToolbox : ModuleRules
 			new string[]
 			{
 				"Core",
-				"GameplayTags",
+				"GameplayTags", "DeveloperSettings",
 				"Engine", "EngineSettings", "GameplayTasks", "InputCore", "ModularGameplay", "ApplicationCore", "AngelscriptCode"
 				// ... add other public dependencies that you statically link with here ...
 			}

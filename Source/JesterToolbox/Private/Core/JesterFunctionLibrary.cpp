@@ -487,16 +487,26 @@ FVector UJesterFunctionLibrary::MirrorVectorByNormal(FVector InVect, FVector InN
 
 bool UJesterFunctionLibrary::CallFunctionByName(UObject* ObjPtr, FName FunctionName)
 {
-	if (ObjPtr)
+	if (ObjPtr == nullptr)
 	{
-		if (UFunction* Function = ObjPtr->FindFunction(FunctionName))
-		{
-			ObjPtr->ProcessEvent(Function, nullptr);
-			return true;
-		}
 		return false;
 	}
+	
+	if (UFunction* Function = ObjPtr->FindFunction(FunctionName))
+	{
+		ObjPtr->ProcessEvent(Function, nullptr);
+		return true;
+	}
 	return false;
+}
+
+bool UJesterFunctionLibrary::HasFunctionWithName(UObject* ObjPtr, FName FunctionName)
+{
+	if(ObjPtr == nullptr)
+	{
+		return false;
+	}
+	return ObjPtr->FindFunction(FunctionName) != nullptr;
 }
 
 UGameStateInitialization* UJesterFunctionLibrary::GetGameStateInitializationComponent(UObject* WorldContextObject)

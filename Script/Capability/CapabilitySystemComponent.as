@@ -1,24 +1,24 @@
 /**
  * Component that manages a collection of capabilities for a character
- * 
+ *
  * This system allows characters to have complex, conditional abilities that can be
  * organized into tree structures. Capabilities can be prevented from activating
  * using gameplay tags, and the system handles automatic enabling/disabling based
  * on game conditions.
- * 
+ *
  * Usage Example:
  * ```
  * // In character blueprint or code:
  * CapabilitySystem.Capabilities.Add(UJumpCapability_AS::StaticClass());
  * CapabilitySystem.Capabilities.Add(USprintCapability_AS::StaticClass());
- * 
+ *
  * // To prevent jumping:
  * CapabilitySystem.GetPreventedCapabilities().AddTag(JumpTag, "Stunned");
  * ```
  */
 class UCapabilitySystemComponent_AS : UActorComponent
 {
-	/** 
+	/**
 	 * Array of capability classes to initialize when the component starts
 	 * These capabilities will be added to the root parallel node
 	 */
@@ -140,7 +140,7 @@ class UCapabilitySystemComponent_AS : UActorComponent
 	/**
 	 * Updates the capability tree and manages active capabilities
 	 * Called every frame to evaluate capability conditions and update active state
-	 * 
+	 *
 	 * @param DeltaSeconds Time elapsed since last update
 	 */
 	void UpdateCapabilityNodes(float DeltaSeconds)
@@ -171,18 +171,14 @@ class UCapabilitySystemComponent_AS : UActorComponent
 	UFUNCTION()
 	void ShowImGui()
 	{
-		ImGui::Text("Capabilities");
-		ImGui::Indent();
-		for (TSubclassOf<UCapability_AS> EachCapability : Capabilities)
-		{
-			ImGui::BoolText(EachCapability.Get().ToString(), IsCapabilityEnabled(EachCapability), "Enabled", "Disabled");
-		}
-		ImGui::Unindent();
-		ImGui::Text("Prevented Capabilities");
+		ImGui::Text(f"Capabilities ({Capabilities.Num()}):");
+		ImGui::Separator();
+		ImGui::Text("Prevented Capabilities:");
 		ImGui::Indent();
 		PreventedCapabilities.ShowImGui();
 		ImGui::Unindent();
-		if(ImGui::TreeNode("Capability Tree"))
+
+		if (ImGui::TreeNode("Capability Tree"))
 		{
 			RootCapabilityNode.ShowImGui();
 			ImGui::TreePop();
