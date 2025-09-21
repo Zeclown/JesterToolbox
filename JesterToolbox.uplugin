@@ -20,5 +20,19 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
+	],
+	"Plugins": [
+		{
+			"Name": "Angelscript",
+			"Enabled": true
+		},
+		{
+			"Name": "GameplayTags",
+			"Enabled": true
+		},
+		{
+			"Name": "ModularGameplay",
+			"Enabled": true
+		}
 	]
 }
